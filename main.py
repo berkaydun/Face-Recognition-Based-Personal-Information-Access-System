@@ -167,7 +167,7 @@ class PersonalAccessSystem:
 if __name__ == "__main__":
     system = PersonalAccessSystem()
 
-    # 1. Adding sample data (Run this only once or when adding new contacts)
+    # 1. Adding sample data (Run this only once or when adding new information)
     # You can add your own data as follows:
     # system.add_person_info("Name_Surname", "Student_ID", "Department", "Date_of_Birth")
     # Example:
