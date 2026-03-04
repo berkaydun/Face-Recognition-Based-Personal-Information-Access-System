@@ -14,17 +14,17 @@ class PersonalAccessSystem:
         self.db_name = db_name
         self.dataset_dir = dataset_dir
         
-        # Klasör yoksa oluştur
+        
         if not os.path.exists(self.dataset_dir):
             os.makedirs(self.dataset_dir)
             print(f"[INFO] '{self.dataset_dir}' folder created.")
 
-        # Veritabanı kurulumunu yap
+        
         self._setup_database()
         
-        # Model Ayarları
-        # ArcFace genellikle FaceNet'ten daha iyi sonuç verir.
-        # Detector olarak retinaface çok hassastır ama yavaştır, opencv hızlıdır.
+        
+        
+        
         self.model_name = "ArcFace" 
         self.detector_backend = "opencv" 
 
@@ -34,7 +34,7 @@ class PersonalAccessSystem:
             conn = sqlite3.connect(self.db_name)
             cursor = conn.cursor()
             
-            # Kişiler tablosu
+            # PERSON TABLE
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS people (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,7 +46,7 @@ class PersonalAccessSystem:
                 )
             ''')
             
-            # Log tablosu (Kim ne zaman giriş yaptı)
+            # LOG TABLE
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS access_logs (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -91,25 +91,25 @@ class PersonalAccessSystem:
         print(f"[PROCESS] Face detection in progress: {img_path}...")
         
         try:
-            # DeepFace.find, veri setindeki yüzlerle karşılaştırma yapar.
-            # Veri seti klasöründeki her alt klasör bir kişi olmalıdır (örn: dataset/Ahmet/img1.jpg)
+            
+            
             dfs = DeepFace.find(
                 img_path=img_path,
                 db_path=self.dataset_dir,
                 model_name=self.model_name,
-                detector_backend=self.detector_backend, # retinaface daha iyidir ama yavaştır
+                detector_backend=self.detector_backend, 
                 distance_metric="cosine",
-                enforce_detection=False, # Yüz bulunamazsa hata vermek yerine boş dönmesi için
+                enforce_detection=False, 
                 silent=True
             )
             
             if len(dfs) > 0 and not dfs[0].empty:
-                # En iyi eşleşmeyi al (ilk sonuç en yakın olanıdır)
-                # identity sütunu dosya yolunu verir: dataset/Ahmet/img1.jpg
+                
+                
                 matched_path = dfs[0].iloc[0]["identity"]
                 
-                # Dosya yolundan isim çıkarma (İşletim sistemine göre değişebilir)
-                # dataset/Ahmet/img.jpg -> Ahmet
+            
+             
                 person_name = os.path.basename(os.path.dirname(matched_path))
                 
                 print(f"[RESULT] Matching Person: {person_name}")
@@ -133,7 +133,7 @@ class PersonalAccessSystem:
             conn.close()
             
             if result:
-                # Log kaydı atalım
+             
                 self._log_access(name, "SUCCESS")
                 
                 return {
@@ -163,23 +163,23 @@ class PersonalAccessSystem:
         except:
             pass
 
-# --- KULLANIM ÖRNEĞİ ---
+# --- EXAMPLE USE ---
 if __name__ == "__main__":
     system = PersonalAccessSystem()
 
-    # 1. Örnek Veri Ekleme (Bunu sadece bir kere veya yeni kişi eklerken çalıştırın)
-    # Kendi verilerinizi aşağıdaki gibi ekleyebilirsiniz:
-    # system.add_person_info("Isim_Soyisim", "Ogrenci_Numarasi", "Bolum", "Dogum_Tarihi")
-    # Örnek:
-    # system.add_person_info("Ahmet_Yilmaz", "12345678", "Bilgisayar Muhendisligi", "2000-01-01")
+    # 1. Adding sample data (Run this only once or when adding new contacts)
+    # You can add your own data as follows:
+    # system.add_person_info("Name_Surname", "Student_ID", "Department", "Date_of_Birth")
+    # Example:
+    # system.add_person_info("John_Doe", "12345678", "Computer Science", "2000-01-01")
 
 
 
     
     print("[SYSTEM] Launched...")
     
-    # Test için bir dosya var mı kontrol edelim, yoksa uyarı verelim.
-    test_image_path = "ornek_resim.jpeg" # Buraya test etmek istediğin fotoğrafın adını yazabilirsin.
+    
+    test_image_path = "ornek_resim.jpeg" # You can write the name of the photo  you want to test here
     
     if os.path.exists(test_image_path):
         info = system.recognize_face(test_image_path)
