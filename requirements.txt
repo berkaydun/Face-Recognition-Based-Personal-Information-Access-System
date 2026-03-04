@@ -1,0 +1,7 @@
+deepface
+opencv-python
+pandas
+openpyxl
+tf-keras
+Flask
+Pillow

@@ -1,0 +1,22 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE settings
+.idea/
+.vscode/
+
+# Project specific
+person_info.db
+dataset/
+static/uploads/
+*.jpeg
+*.jpg
+*.png
+
+# Exclude sample images explicitly
+!ornek_resim.jpeg

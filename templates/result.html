@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="result-container">
+    <div class="result-header">
+        <h3>Sorgulama Sonucu</h3>
+        <a href="/" class="btn-back">Yeni Sorgu</a>
+    </div>
+
+    <div class="result-card">
+        <div class="photo-section">
+            {% if uploaded_image %}
+            <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" alt="Sorgulanan Kişi"
+                class="person-photo">
+            {% else %}
+            <div class="no-photo">Fotoğraf Yok</div>
+            {% endif %}
+            <span class="status-badge success">EŞLEŞME BAŞARILI</span>
+        </div>
+
+        <div class="info-section">
+            <table class="info-table">
+                <tbody>
+                    <tr>
+                        <th>TC / ID</th>
+                        <td>{{ info.get('ID', 'Bilinmiyor') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ad Soyad</th>
+                        <td>{{ info.get('Name', 'Bilinmiyor') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Öğrenci No</th>
+                        <td>{{ info.get('Student Number', '-') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bölüm</th>
+                        <td>{{ info.get('Department', '-') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Doğum Tarihi</th>
+                        <td>{{ info.get('Date of Birth', '-') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

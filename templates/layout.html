@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAIS - Kişisel Bilgi Erişim Sistemi</title>
+    <!-- Google Fonts for official look -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flag.css') }}">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="FAIS Logo" class="logo">
+                <div class="site-title">
+                    <h1>KİŞİSEL BİLGİ ERİŞİM SİSTEMİ</h1>
+                    <h2>Yüz Tanıma Tabanlı Sorgulama Portalı</h2>
+                </div>
+            </div>
+            <div class="flag-area">
+                <img src="{{ url_for('static', filename='img/flag.png') }}?v={{ range(1, 10000) | random }}"
+                    alt="Türk Bayrağı" class="flag">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 - FAIS - Tüm Hakları Saklıdır.</p>
+            <div class="legal-warning">
+                <h3>YASAL UYARI</h3>
+                <p>Bu hizmete ilişkin tüm haklar saklıdır. Bu hizmeti yetkisiz kullanan kişi, doğacak her türlü hukuki
+                    sorumluluğu kabul etmiş sayılır. Kişisel bilgiler hiçbir ticari amaçla veya kötü niyetle
+                    kullanılamaz.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="query-box">
+    <div class="query-header">
+        <h3>Kişi Sorgulama</h3>
+        <p>Lütfen sorgulamak istediğiniz kişinin fotoğrafını yükleyiniz.</p>
+    </div>
+
+    <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="file-input-wrapper">
+            <input type="file" name="file" id="file" accept="image/*" required>
+            <label for="file" class="file-label">
+                <span id="file-name">Fotoğraf Seç</span>
+            </label>
+        </div>
+        <button type="submit" class="btn-submit">SORGULA</button>
+    </form>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function (e) {
+            var fileName = e.target.files[0].name;
+            document.getElementById('file-name').textContent = "Seçilen Dosya: " + fileName;
+        });
+    </script>
+
+    {% if uploaded_image %}
+    <div class="warning-box">
+        <p>Son yüklenen dosya üzerinde işlem yapıldı.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
