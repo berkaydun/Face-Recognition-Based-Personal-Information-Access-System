@@ -37,8 +37,6 @@ body {
 
 .logo {
     height: 80px;
-    /* background: #fff; Removed to allow transparent logos to look better */
-    /* padding: 5px; */
     border-radius: 5px;
 }
 
