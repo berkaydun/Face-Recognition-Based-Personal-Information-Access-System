@@ -21,3 +21,4 @@ Initial Release & Core Engine
 [NEW] Basic Detection: Implemented local script execution capable of comparing a test image against a static dataset directory.
 [NEW] Local Testing Environment: Provided a command-line testing protocol via standard output (print logs).
 
+  
